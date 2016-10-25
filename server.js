@@ -2,6 +2,7 @@
  * Created by YS on 2016-10-25.
  */
  var net = require('net');
+ const driveInfo_model = require('./models/driveInfo_model');
 
 var server = net.createServer(function(client) {
   console.log('Client connection: ');
@@ -19,6 +20,13 @@ var server = net.createServer(function(client) {
     var readMessage = data.toString();
     var DriveInfo = require('./DriveInfo');
     var driveInfo = new DriveInfo().initByString(readMessage);
+    driveInfo_model.insert_driveInfo(driveInfo)
+      .then(function(result) {
+        console.log(result);
+      })
+      .catch(function(result) {
+        console.log(result);
+      })
     console.log(driveInfo);
 
     writeData(client, 'Sending: ' + data.toString());

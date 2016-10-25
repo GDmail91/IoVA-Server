@@ -12,13 +12,13 @@ DriveInfo.prototype.init = function(user_id, drive_id) {
 DriveInfo.prototype.initByString = function(string) {
 	var parsedString = string.split('|');
 	var driveInfo = new DriveInfo().init(parsedString[0], parsedString[1]);
-	driveInfo.setReqId(parsedString[3]);
+	driveInfo.setReqId(parsedString[2]);
 	driveInfo.setInfo({
-		speed: parsedString[4], 
-		front: parsedString[5], 
-		back: parsedString[6], 
-		lat: parsedString[7], 
-		lon: parsedString[8]
+		speed: parsedString[3], 
+		front: parsedString[4], 
+		back: parsedString[5], 
+		lat: parsedString[6], 
+		lon: parsedString[7]
 	});
 
 	return driveInfo;
