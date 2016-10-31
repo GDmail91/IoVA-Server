@@ -4,7 +4,7 @@
 var net = require('net');
 
 function getConnection(connName){
-  var client = net.connect({port: 8107, host:'127.0.0.1'}, function() {
+  var client = net.connect({port: 8107, host:'128.199.69.84'}, function() {
     console.log(connName + ' Connected: ');
     console.log('   local = %s:%s', this.localAddress, this.localPort);
     console.log('   remote = %s:%s', this.remoteAddress, this.remotePort);
