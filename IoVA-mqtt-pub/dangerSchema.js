@@ -4,7 +4,7 @@
 
 // MongoDB module
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/iova_db');
+mongoose.connect(require('../credentials').mongodb.host);
 
 var Schema = mongoose.Schema;
 

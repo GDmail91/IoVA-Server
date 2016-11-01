@@ -3,7 +3,7 @@
  */
 // MQTT module
 const mqtt = require('mqtt');
-const connection = mqtt.connect('mqtt://52.78.207.12:1885');
+const connection = mqtt.connect(require('../credentials').mqtt.host);
 /*
 const dangerModelGen = require('./danger_model');
 var dangerModel = new dangerModelGen();
@@ -101,7 +101,7 @@ function getInfo(parsedMsg) {
 }
 
 require('amqplib/callback_api')
-    .connect('amqp://52.78.207.12', function(err, conn) {
+    .connect(require('../credentials').rabbitmq.host, function(err, conn) {
         if (err != null) bail(err);
         consumer(conn);
     });

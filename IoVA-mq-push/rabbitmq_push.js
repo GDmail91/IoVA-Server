@@ -8,10 +8,11 @@ function bail(err) {
     process.exit(1);
 }
 
-require('amqplib/callback_api').connect('amqp://52.78.207.12', function(err, conn) {
-    if (err != null) bail(err);
-    amqpconn = conn;
-});
+require('amqplib/callback_api')
+    .connect(require('../credentials').rabbitmq.host, function(err, conn) {
+        if (err != null) bail(err);
+        amqpconn = conn;
+    });
 
 // Publisher
 exports.publisher = function (obj) {
