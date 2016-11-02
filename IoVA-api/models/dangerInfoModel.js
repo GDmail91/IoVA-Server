@@ -97,7 +97,7 @@ var dangerPointModel = {
                         var insert = [zone_name, access_token, lat, lon, type];
                         var sql = "INSERT INTO danger_info SET " +
                             "info_zone_name = ?," +
-                            "info_user_id = (SELECT user_id FROM Users WHERE access_token = ?)," +
+                            "info_user_id = (SELECT user_id FROM users WHERE access_token = ?)," +
                             "latitude = ?," +
                             "longitude = ?, " +
                             "type = ?";
