@@ -35,7 +35,7 @@ function checkToken(data) {
                 }
                 console.log(fb_profile);
                 data.user_id = fb_profile.id;
-                data.username = fb_profile.username;
+                data.username = fb_profile.name;
                 return resolved(data);
             });
         }
