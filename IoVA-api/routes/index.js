@@ -7,6 +7,9 @@ var router = express.Router();
 
 module.exports = function(){
 
+  // User registration
+  router.post('/users', api.users.regUsers);        // 사용자 등록하기
+
   // DangerLocation controller
   router.get('/danger_location/:zone_name', api.danger.getLocationLevel);        // 위험 레벨 가져오기
   router.post('/danger_location/:zone_name', api.danger.postDangerPoint);        // 위험 지수 추가하기
