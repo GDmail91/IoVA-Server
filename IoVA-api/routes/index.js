@@ -14,6 +14,8 @@ module.exports = function(){
   router.get('/danger_location/:zone_name', api.danger.getLocationLevel);        // 위험 레벨 가져오기
   router.post('/danger_location/:zone_name', api.danger.postDangerPoint);        // 위험 지수 추가하기
 
+  router.post('/drive_info', api.drive.postDriveInfo);                 // 운전 정보 저장
+
   // catch 404 and forward to error handler
   router.all('/', function() {
     var err = new Error('Not Found');
