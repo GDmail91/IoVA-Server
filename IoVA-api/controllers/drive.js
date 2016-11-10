@@ -54,5 +54,21 @@ module.exports = {
                 })
                 .catch(next);
         }
+    },
+
+    getLastIndex: function(req, res, next) {
+        var data = {
+            access_token: req.header('access-token')
+        };
+
+        driveInfoModel.selectLastIndex(data.access_token)
+            .then(function(result) {
+                res.statusCode = 200;
+                return res.json({
+                    msg: "Last Index",
+                    data: result
+                });
+            })
+            .catch(next);
     }
 };

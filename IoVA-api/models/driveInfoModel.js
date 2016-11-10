@@ -53,6 +53,42 @@ var driveInfoModel = {
                     return rejected(err);
                 });
         });
+    },
+
+    selectLastIndex : function(access_token) {
+        return new Promise(function(resolved, rejected) {
+            mysqlSetting.getPool()
+                .then(mysqlSetting.getConnection)
+                .then(mysqlSetting.connBeginTransaction)
+                .then(function(context) {
+                    return new Promise(function(resolved, rejected) {
+                        var select = [access_token];
+                        var sql = "SELECT drive_id, request_id " +
+                            "FROM drive_info " +
+                            "WHERE drive_user_id = (SELECT user_id FROM users WHERE access_token = ?) " +
+                            "ORDER BY drive_id DESC, request_id DESC " +
+                            "LIMIT 1";
+                        context.connection.query(sql, select, function (err, rows) {
+                            if (err) {
+                                var error = new Error("Failed insert information");
+                                error.status = 500;
+                                console.error(err);
+                                return rejected(error);
+                            }
+
+                            context.result = rows[0];
+                            return resolved(context);
+                        });
+                    });
+                })
+                .then(mysqlSetting.commitTransaction)
+                .then(function(data) {
+                    return resolved(data);
+                })
+                .catch(function(err) {
+                    return rejected(err);
+                });
+        });
     }
 };
 
