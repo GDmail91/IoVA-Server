@@ -23,6 +23,7 @@ var dangerPointModel = {
                                 var error = new Error("Failed get danger levels");
                                 error.status = 500;
                                 console.error(err);
+                                context.connection.rollback();
                                 return rejected(error);
                             } else if (rows.length == 0) {
                                 context.result = {};
@@ -60,6 +61,7 @@ var dangerPointModel = {
                                 var error = new Error("Failed insert information");
                                 error.status = 500;
                                 console.error(err);
+                                context.connection.rollback();
                                 return rejected(error);
                             } else if(rows.length == 0) {
                                 context.create_flag = true;
@@ -82,6 +84,7 @@ var dangerPointModel = {
                                     var error = new Error("Failed insert information");
                                     error.status = 500;
                                     console.error(err);
+                                    context.connection.rollback();
                                     return rejected(error);
                                 }
 
@@ -106,6 +109,7 @@ var dangerPointModel = {
                                 var error = new Error("Failed insert information");
                                 error.status = 500;
                                 console.error(err);
+                                context.connection.rollback();
                                 return rejected(error);
                             }
 
@@ -124,11 +128,13 @@ var dangerPointModel = {
                                 var error = new Error("Failed count zone point");
                                 error.status = 500;
                                 console.error(err);
+                                context.connection.rollback();
                                 return rejected(error);
                             } else if (rows.length == 0) {
                                 var error = new Error("No search result");
                                 error.status = 500;
                                 console.error(err);
+                                context.connection.rollback();
                                 return rejected(error);
                             }
 

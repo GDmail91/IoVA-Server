@@ -25,6 +25,7 @@ var userModel = {
                                 var error = new Error("Failed user registration");
                                 error.status = 500;
                                 console.error(err);
+                                context.connection.rollback();
                                 return rejected(error);
                             }
 

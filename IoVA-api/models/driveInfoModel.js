@@ -38,6 +38,7 @@ var driveInfoModel = {
                                 var error = new Error("Failed insert information");
                                 error.status = 500;
                                 console.error(err);
+                                context.connection.rollback();
                                 return rejected(error);
                             }
 
@@ -73,6 +74,7 @@ var driveInfoModel = {
                                 var error = new Error("Failed insert information");
                                 error.status = 500;
                                 console.error(err);
+                                context.connection.rollback();
                                 return rejected(error);
                             }
 
@@ -85,7 +87,8 @@ var driveInfoModel = {
                 .then(function(data) {
                     return resolved(data);
                 })
-                .catch(function(err) {
+                .catch(mysqlSetting.commitTransaction)
+                .then(function(err) {
                     return rejected(err);
                 });
         });

@@ -38,6 +38,7 @@ var driveInfoModel = {
                                 var error = new Error("Failed insert information");
                                 error.status = 500;
                                 console.error(err);
+                                context.connection.rollback();
                                 return rejected(error);
                             }
 
