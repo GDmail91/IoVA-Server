@@ -3,6 +3,7 @@
  */
 var driveInfoModel = require('../models/driveInfoModel');
 var safeScoreModel = require('../models/safeScoreModel');
+var lastDriveModel = require('../models/lastDriveModel');
 
 /**
  * @type {{
@@ -16,8 +17,6 @@ module.exports = {
         var data = {
             access_token: req.header('access-token')
         };
-
-        console.log(data);
 
         var drive_datas;
         var safe_score;
@@ -57,7 +56,7 @@ module.exports = {
                         var scoreBuffer = new Buffer(0);
 
                         // Read in the file, convert it to base64
-                        var scoreFileStream = fs.createReadStream(files.raw_safe_score.path);
+                        var scoreFileStream = fs.createReadStream(files.raw_score_data.path);
 
                         scoreFileStream.on('error', function (err) {
                             if (err) {
@@ -80,7 +79,7 @@ module.exports = {
                             driveInfoModel.insert(data.access_token, drive_data)
                                 .then(function (result) {
                                     if (++count == drive_datas.length) {
-                                        resolved();
+                                        resolved(drive_data);
                                     }
                                 })
                                 .catch(function (err) {
@@ -95,20 +94,29 @@ module.exports = {
                         });
                     });
                 })
-                .then(function() {
-                    safeScoreModel.insert(data.access_token, safe_score)
-                        .then(function(result) {
-                            res.statusCode = 200;
-                            return res.json({
-                                msg: "Completed insert",
-                                data: {
-                                    insert_length: drive_datas.length
-                                }
-                            });
-                        })
-                        .catch(next);
+                .then(function(last_data) {
+                    return new Promise(function(resolved, rejected) {
+                        lastDriveModel.update(data.access_token, last_data)
+                            .then(resolved)
+                            .catch(next);
+                    });
                 })
-                .catch(next)
+                .then(function() {
+                    return new Promise(function(resolved, rejected) {
+                        safeScoreModel.insert(data.access_token, safe_score)
+                            .then(function(result) {
+                                res.statusCode = 200;
+                                return res.json({
+                                    msg: "Completed insert",
+                                    data: {
+                                        insert_length: drive_datas.length
+                                    }
+                                });
+                            })
+                            .catch(next);
+                    });
+                })
+                .catch(next);
         });
     },
 
@@ -117,7 +125,7 @@ module.exports = {
             access_token: req.header('access-token')
         };
 
-        driveInfoModel.selectLastIndex(data.access_token)
+        lastDriveModel.selectLastIndex(data.access_token)
             .then(function(result) {
                 res.statusCode = 200;
                 return res.json({
