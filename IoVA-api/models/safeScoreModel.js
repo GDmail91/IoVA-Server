@@ -4,7 +4,7 @@
 var credentials = require('../../credentials');
 var mysqlSetting = require('./mysqlSetting');
 
-var driveInfoModel = {
+var safeScoreModel = {
     insert : function(access_token, safe_score) {
         return new Promise(function(resolved, rejected) {
             mysqlSetting.getPool()
@@ -57,4 +57,4 @@ var driveInfoModel = {
     }
 };
 
-module.exports = driveInfoModel;
+module.exports = safeScoreModel;

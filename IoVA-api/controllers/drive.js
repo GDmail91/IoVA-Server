@@ -102,8 +102,8 @@ module.exports = {
                     });
                 })
                 .then(function() {
-                    return new Promise(function(resolved, rejected) {
-                        safeScoreModel.insert(data.access_token, safe_score)
+                    safe_score.forEach(function(each_score, index) {
+                        safeScoreModel.insert(data.access_token, each_score)
                             .then(function(result) {
                                 res.statusCode = 200;
                                 return res.json({

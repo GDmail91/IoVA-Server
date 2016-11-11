@@ -61,7 +61,7 @@ var lastDriveModel = {
                             "WHERE last_user_id = (SELECT user_id FROM users WHERE access_token = ?) ";
                         context.connection.query(sql, select, function (err, rows) {
                             if (err) {
-                                var error = new Error("Failed insert information");
+                                var error = new Error("Failed get information");
                                 error.status = 500;
                                 console.error(err);
                                 context.connection.rollback();
