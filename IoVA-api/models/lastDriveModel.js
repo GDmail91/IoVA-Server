@@ -69,11 +69,8 @@ var lastDriveModel = {
                                 context.connection.rollback();
                                 return rejected(error);
                             } else if (rows.length == 0) {
-                                var error = new Error("No data");
-                                error.status = 403;
-                                console.error(err);
-                                context.connection.rollback();
-                                return rejected(error);
+                                context.result = {};
+                                return resolved(context);
                             }
 
                             context.result = rows[0];
