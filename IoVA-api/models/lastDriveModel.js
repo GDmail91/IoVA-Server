@@ -58,7 +58,9 @@ var lastDriveModel = {
                         var select = [access_token];
                         var sql = "SELECT last_drive_id, last_request_id " +
                             "FROM last_drive_index " +
-                            "WHERE last_user_id = (SELECT user_id FROM users WHERE access_token = ?) ";
+                            "WHERE last_user_id = (SELECT user_id FROM users WHERE access_token = ?) " +
+                            "ORDER BY last_drive_id DESC, last_request_id DESC " +
+                            "LIMIT 1 ";
                         context.connection.query(sql, select, function (err, rows) {
                             if (err) {
                                 var error = new Error("Failed get information");
