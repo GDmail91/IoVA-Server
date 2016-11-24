@@ -4,6 +4,7 @@
 var driveInfoModel = require('../models/driveInfoModel');
 var safeScoreModel = require('../models/safeScoreModel');
 var lastDriveModel = require('../models/lastDriveModel');
+var mysqlSetting = require('../models/mysqlSetting');
 
 /**
  * @type {{
