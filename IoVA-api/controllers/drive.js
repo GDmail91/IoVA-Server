@@ -76,22 +76,26 @@ module.exports = {
                 .then(function() {
                     return new Promise(function(resolved, rejected) {
                         var count = 0;
-                        drive_datas.forEach(function (drive_data, index) {
+                        var async = require('async');
+                        async.each(drive_datas, function(drive_data, callback) {
                             driveInfoModel.insert(data.access_token, drive_data)
                                 .then(function (result) {
-                                    if (++count == drive_datas.length) {
-                                        resolved(drive_data);
-                                    }
+                                    callback(null);
                                 })
                                 .catch(function (err) {
-                                    res.statusCode = 500;
-                                    return res.json({
-                                        msg: "Error on insert data. Please check your data",
-                                        data: {
-                                            error_index: index
-                                        }
-                                    });
+                                    callback(err);
                                 });
+                        }, function(err) {
+                            if(err) {
+                                res.statusCode = 500;
+                                return res.json({
+                                    msg: "Error on insert data. Please check your data",
+                                    data: {
+                                        error_index: index
+                                    }
+                                });
+                            }
+                            resolved(drive_datas.get(drive_datas.length-1));
                         });
                     });
                 })
