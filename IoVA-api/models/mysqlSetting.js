@@ -61,7 +61,7 @@ var commitTransaction = function(context) {
                 console.error(err);
                 return rejected(error);
             }
-
+            releaseConnection(context);
             return resolved(context.result);
         });
     });

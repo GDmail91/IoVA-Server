@@ -90,9 +90,7 @@ module.exports = {
                                 res.statusCode = 500;
                                 return res.json({
                                     msg: "Error on insert data. Please check your data",
-                                    data: {
-                                        error_index: index
-                                    }
+                                    data: {}
                                 });
                             }
                             resolved(drive_datas.get(drive_datas.length-1));

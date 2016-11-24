@@ -37,7 +37,6 @@ var dangerLevelModel = {
                     });
                 })
                 .then(mysqlSetting.commitTransaction)
-                .then(mysqlSetting.releaseConnection)
                 .then(function(data){
                     return resolved(data);
                 })
@@ -114,7 +113,6 @@ var dangerLevelModel = {
                     });
                 })
                 .then(mysqlSetting.commitTransaction)
-                .then(mysqlSetting.releaseConnection)
                 .then(function(data) {
                     return resolved(data);
                 })

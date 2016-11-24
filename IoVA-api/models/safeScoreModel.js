@@ -48,7 +48,6 @@ var safeScoreModel = {
                     });
                 })
                 .then(mysqlSetting.commitTransaction)
-                .then(mysqlSetting.releaseConnection)
                 .then(function(data) {
                     return resolved(data);
                 })
