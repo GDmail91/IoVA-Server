@@ -79,12 +79,10 @@ module.exports = {
                         var async = require('async');
                         async.each(drive_datas, function(drive_data, callback) {
                             driveInfoModel.insert(data.access_token, drive_data)
-                                .then(function (result) {
-                                    callback(null);
-                                })
                                 .catch(function (err) {
-                                    callback(err);
+                                    return callback(err);
                                 });
+                            callback(null);
                         }, function(err) {
                             if(err) {
                                 res.statusCode = 500;
@@ -93,7 +91,7 @@ module.exports = {
                                     data: {}
                                 });
                             }
-                            resolved(drive_datas.get(drive_datas.length-1));
+                            resolved(drive_datas[drive_datas.length-1]);
                         });
                     });
                 })
