@@ -39,6 +39,7 @@ var safeScoreModel = {
                                 error.status = 500;
                                 console.error(err);
                                 context.connection.rollback();
+                                mysqlSetting.releaseConnection(context);
                                 return rejected(error);
                             }
 
@@ -47,6 +48,7 @@ var safeScoreModel = {
                     });
                 })
                 .then(mysqlSetting.commitTransaction)
+                .then(mysqlSetting.releaseConnection)
                 .then(function(data) {
                     return resolved(data);
                 })

@@ -26,6 +26,7 @@ var userModel = {
                                 error.status = 500;
                                 console.error(err);
                                 context.connection.rollback();
+                                mysqlSetting.releaseConnection(context);
                                 return rejected(error);
                             }
 
@@ -38,6 +39,7 @@ var userModel = {
                     });
                 })
                 .then(mysqlSetting.commitTransaction)
+                .then(mysqlSetting.releaseConnection)
                 .then(function(data) {
                     return resolved(data);
                 })

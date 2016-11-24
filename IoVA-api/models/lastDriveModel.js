@@ -31,6 +31,7 @@ var lastDriveModel = {
                                 error.status = 500;
                                 console.error(err);
                                 context.connection.rollback();
+                                mysqlSetting.releaseConnection(context);
                                 return rejected(error);
                             }
 
@@ -67,6 +68,7 @@ var lastDriveModel = {
                                 error.status = 500;
                                 console.error(err);
                                 context.connection.rollback();
+                                mysqlSetting.releaseConnection(context);
                                 return rejected(error);
                             } else if (rows.length == 0) {
                                 context.result = {};

@@ -24,6 +24,7 @@ var dangerPointModel = {
                                 error.status = 500;
                                 console.error(err);
                                 context.connection.rollback();
+                                mysqlSetting.releaseConnection(context);
                                 return rejected(error);
                             } else if (rows.length == 0) {
                                 context.result = {};
@@ -36,6 +37,7 @@ var dangerPointModel = {
                     });
                 })
                 .then(mysqlSetting.commitTransaction)
+                .then(mysqlSetting.releaseConnection)
                 .then(function(data){
                     return resolved(data);
                 })
@@ -62,6 +64,7 @@ var dangerPointModel = {
                                 error.status = 500;
                                 console.error(err);
                                 context.connection.rollback();
+                                mysqlSetting.releaseConnection(context);
                                 return rejected(error);
                             } else if(rows.length == 0) {
                                 context.create_flag = true;
@@ -85,6 +88,7 @@ var dangerPointModel = {
                                     error.status = 500;
                                     console.error(err);
                                     context.connection.rollback();
+                                    mysqlSetting.releaseConnection(context);
                                     return rejected(error);
                                 }
 
@@ -110,6 +114,7 @@ var dangerPointModel = {
                                 error.status = 500;
                                 console.error(err);
                                 context.connection.rollback();
+                                mysqlSetting.releaseConnection(context);
                                 return rejected(error);
                             }
 
@@ -129,12 +134,14 @@ var dangerPointModel = {
                                 error.status = 500;
                                 console.error(err);
                                 context.connection.rollback();
+                                mysqlSetting.releaseConnection(context);
                                 return rejected(error);
                             } else if (rows.length == 0) {
                                 var error = new Error("No search result");
                                 error.status = 500;
                                 console.error(err);
                                 context.connection.rollback();
+                                mysqlSetting.releaseConnection(context);
                                 return rejected(error);
                             }
 
@@ -145,6 +152,7 @@ var dangerPointModel = {
                     });
                 })
                 .then(mysqlSetting.commitTransaction)
+                .then(mysqlSetting.releaseConnection)
                 .then(function(data) {
                     return resolved(data);
                 })

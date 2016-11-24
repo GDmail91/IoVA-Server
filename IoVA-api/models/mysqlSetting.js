@@ -15,8 +15,8 @@ var getPool = function() {
             user: credentials.mysql.user,
             password: credentials.mysql.password,
             database: credentials.mysql.database,
-            connectionLimit: 21,
-            waitForConnections: false
+            connectionLimit: 200,
+            waitForConnections: true
         });
 
         return resolved(pool);
@@ -68,7 +68,15 @@ var commitTransaction = function(context) {
     });
 };
 
+var releaseConnection = function(context) {
+    return new Promise(function(resolved, rejected) {
+        context.connection.release();
+        return resolved(context);
+    });
+};
+
 module.exports.getPool = getPool;
 module.exports.getConnection = getConnection;
 module.exports.connBeginTransaction = connBeginTransaction;
 module.exports.commitTransaction = commitTransaction;
+module.exports.releaseConnection = releaseConnection;
